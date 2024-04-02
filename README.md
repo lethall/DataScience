@@ -1,12 +1,17 @@
 # DataScience
 Experiments and tools to extract useful information from raw data
 ## Agenda
-#### 4/2
+#### 4/3
+- Virtual environments
 - Ipython
-- Review pro/con VSCode and Jupyter
+- Picking a kernel
+- Eclipse timing for Zeke's house
 - Walk-thru of spherical module and notebooks
-- Refine plan/curriculum and daily schedule
 - Deeper into Python
+
+#### 4/2
+- Review pro/con VSCode and Jupyter
+- Refine plan/curriculum and daily schedule
 
 #### 4/1
 - Discuss article and whether computers are "smart"

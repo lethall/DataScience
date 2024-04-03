@@ -1,13 +1,16 @@
 # DataScience
 Experiments and tools to extract useful information from raw data
 ## Agenda
+
+#### 4/4
+- Walk-thru of spherical module and notebooks
+- Deeper into Python (DSfS ch 2 "A Crash Course in Python")
+
 #### 4/3
 - Virtual environments
 - Ipython
 - Picking a kernel
 - Eclipse timing for Zeke's house
-- Walk-thru of spherical module and notebooks
-- Deeper into Python
 
 #### 4/2
 - Review pro/con VSCode and Jupyter

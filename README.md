@@ -2,9 +2,12 @@
 Experiments and tools to extract useful information from raw data
 ## Agenda
 
-#### 4/5 (this may take several days)
-- Review prefaces and DSfS ch 1 "DataScienceter"
-- Deeper into Python (DSfS ch 2 "A Crash Course in Python")
+#### 4/8 (this may take several days)
+- Review remainder of DSfS ch 1 "DataScienceter"
+- Deeper into Python (start DSfS ch 2 "A Crash Course in Python")
+
+#### 4/5
+- Review prefaces and started DSfS ch 1 "DataScienceter"
 
 #### 4/4
 - Walk-thru of spherical module and notebooks

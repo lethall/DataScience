@@ -2,11 +2,13 @@
 Experiments and tools to extract useful information from raw data
 ## Agenda
 
-#### 4/9
-- Explain the difference between a set and a dictionary
+#### 4/10
 - Review comprehensions (list, dict, set)
 - Deeper into Python (continue DSfS ch 2 "A Crash Course in Python")
 - Choose some exercises to get experience
+
+#### 4/9
+- Explain the difference between a set and a dictionary
 
 #### 4/8 (this may take several days)
 - Review remainder of DSfS ch 1 "DataScienceter"

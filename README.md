@@ -2,11 +2,15 @@
 Experiments and tools to extract useful information from raw data
 ## Agenda
 
+#### 4/12
+- Review spherical.py testing with assertions
+- Python class definitions
+- Deeper into Python (review PfDA ch 2 "Python Language Basics")
+- Choose some exercises to get experience
+
 #### 4/11
 - Discuss assertions and testing
 - Start fixing spherical.py to use assertions
-- Deeper into Python (review PfDA ch 2 "Python Language Basics")
-- Choose some exercises to get experience
 
 #### 4/10
 - Review comprehensions (list, dict, set)

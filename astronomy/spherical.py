@@ -9,11 +9,7 @@ class DMS:
     sec : float = 0.0
 
     def __init__(self, deg: float = 0.0) -> None:
-        """To DMS and back
-        >>> angle = DMS(83.81234518);\
-            f"{angle} == {DMS().assign(angle.deg, angle.min, angle.sec):.5f}"
-        '83° 48\\\' 44.44" (83.81235°) == 83.81235'
-        """
+        """To DMS and back"""
         self.dd = deg
         if abs(deg) < 1.0e-10:
             return
@@ -26,12 +22,7 @@ class DMS:
         self.sec %= 60
 
     def assign(self, d: float, m: float = 0, s: float = 0) -> float:
-        """Check the signs
-        >>> f"{DMS().assign(-5, 30, 1):.4f}"
-        '-5.5003'
-        >>> f"{DMS().assign(5, 30, 1):.4f}"
-        '5.5003'
-        """
+        """Assign a decimal angle using degrees, minutes, seconds"""
         self.deg = int(d)
         self.min = int(m)
         self.sec = s
@@ -43,6 +34,13 @@ class DMS:
 
     def __str__(self) -> str:
         return f"""{self.deg}\xb0 {self.min}' {self.sec:05.2f}" ({self.dd:.5f}\xb0)"""
+
+angle = DMS(83.81234518)
+assert f"{angle} == {DMS().assign(angle.deg, angle.min, angle.sec):.5f}" == '83° 48\' 44.44" (83.81235°) == 83.81235'
+
+assert f"{DMS().assign(-5, 30, 1):.4f}" == '-5.5003'
+assert f"{DMS().assign(5, 30, 1):.4f}" == '5.5003'
+        
 
 class Triangle:
     A_deg : float = 0.0
@@ -79,25 +77,12 @@ class Triangle:
 # Planar
 class Planar(Triangle):
     def law_of_cosine(self, a: float, b: float, c_deg: float) -> float:
-        """ Should agree with Pythagoras
-        >>> tri = Planar().assign(0, 0, 90, 1, 1, 0);\
-            f"{abs(sqrt(tri.a**2 + tri.b**2) - tri.law_of_cosine(tri.a, tri.b, tri.C_deg)):.4f}"
-        '0.0000'
-        """
         self.C_deg = c_deg
         self.c = sqrt(a**2 + b**2 - 2*a*b*cos(self.C_rad))
         return self.c
 
     def law_of_sine_ASA(self, a_deg: float, side_a: float, b_deg: float) -> float:
-        """Angle, Side, Angle
-        Should agree with Pythagoras
-        >>> tri = Planar();\
-            b = tri.law_of_sine_ASA(45, 1, 45);\
-            C_rad = radians(180 - (45 + 45));\
-            c = sin(C_rad) / tri.sine_ratio;\
-            f"{abs(sqrt(c**2 - b**2) - 1):.4f}"
-        '0.0000'
-        """
+        """Angle, Side, Angle"""
         self.A_deg = a_deg
         self.B_deg = b_deg
         self.sine_ratio = sin(self.A_rad) / side_a
@@ -105,15 +90,7 @@ class Planar(Triangle):
         return self.b
 
     def law_of_sine_SSA(self, side_a: float, side_b: float, a_deg: float) -> float:
-        """Side, Side, Angle
-        Should agree with Pythagoras
-        >>> tri = Planar();\
-            B_deg = tri.law_of_sine_SSA(1, 1, 45);\
-            C_rad = radians(180 - (45 + B_deg));\
-            c = sin(C_rad) / tri.sine_ratio;\
-            f"{abs(sqrt(c**2 - 1**2) - 1):.4f}"
-        '0.0000'
-        """
+        """Side, Side, Angle"""
         self.a = side_a
         self.b = side_b
         self.A_deg = a_deg
@@ -122,13 +99,27 @@ class Planar(Triangle):
         self.B_rad = asin(self.sine_ratio * self.b)
         return self.B_deg
 
+        
+tri = Planar().assign(0, 0, 90, 1, 1, 0) 
+assert f"{abs(sqrt(tri.a**2 + tri.b**2) - tri.law_of_cosine(tri.a, tri.b, tri.C_deg)):.4f}" == '0.0000'
+
+tri = Planar()
+b = tri.law_of_sine_ASA(45, 1, 45)
+C_rad = radians(180 - (45 + 45))
+c = sin(C_rad) / tri.sine_ratio
+assert f"{abs(sqrt(c**2 - b**2) - 1):.4f}" == '0.0000'
+
+
+tri = Planar()
+B_deg = tri.law_of_sine_SSA(1, 1, 45)
+C_rad = radians(180 - (45 + B_deg))
+c = sin(C_rad) / tri.sine_ratio
+assert f"{abs(sqrt(c**2 - 1**2) - 1):.4f}" == '0.0000'
+        
+        
 # Spherical
 class Spherical(Triangle):
     def law_of_cosine(self, a: float, b: float, c_deg: float) -> float:
-        """Checks
-        >>> f"{Spherical().law_of_cosine(75, 30, 60):.5f}"
-        '62.24930'
-        """
         self.C_deg = c_deg
         cos_c = cos(self.C_rad)
         self.a = a = radians(a)
@@ -139,8 +130,6 @@ class Spherical(Triangle):
     def law_of_sine_ASA(self, a_deg: float, side_a: float, b_deg: float) -> float:
         """Angle, Side, Angle
         Should agree with Pythagoras
-        >>> f"{Spherical().law_of_sine_ASA(30, 45, 15):.4f}"
-        '21.4707'
         """
         self.A_deg = a_deg
         self.a = a = sin(radians(side_a))
@@ -149,8 +138,6 @@ class Spherical(Triangle):
     
     def law_of_sine_SSA(self, side_a: float, side_b: float, a_deg: float) -> float:
         """Side, Side, Angle
-        >>> f"{Spherical().law_of_sine_SSA(62.24930, 75, 60):.4f}"
-        '70.9502'
         """
         self.a = a = sin(radians(side_a))
         self.b = b = sin(radians(side_b))
@@ -160,10 +147,6 @@ class Spherical(Triangle):
         return self.B_deg
 
     def area(self, a_deg: float, b_deg: float, c_deg: float, r: float) -> float:
-        """
-        >>> f"{Spherical().area(60, 75, 105, 6378000):.1f}"
-        '42598827710210.5'
-        """
         self.A_deg = a_deg
         self.B_deg = b_deg
         self.C_deg = c_deg
@@ -173,6 +156,15 @@ class Spherical(Triangle):
     @staticmethod
     def delta_omega(deg: float) -> float:
         return 2 * pi * (1 - cos(radians(deg)))
+
+
+assert f"{Spherical().law_of_cosine(75, 30, 60):.5f}" == '62.24930'
+
+assert f"{Spherical().law_of_sine_ASA(30, 45, 15):.4f}" == '21.4707'
+
+assert f"{Spherical().law_of_sine_SSA(62.24930, 75, 60):.4f}" == '70.9502'
+
+assert f"{Spherical().area(60, 75, 105, 6378000):.1f}" == '42598827710210.5'
 
 class Geo:
     lat: float
@@ -246,6 +238,6 @@ def position(latitude : float, alt_or_decl : float, azm_or_ha : float, azm_corre
     return decl_deg, hra_deg
 
 
-if __name__ == "__main__":
-    import doctest
-    doctest.testmod(verbose=True)
+# if __name__ == "__main__":
+#     import doctest
+#     doctest.testmod(verbose=True)

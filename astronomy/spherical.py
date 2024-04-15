@@ -36,8 +36,8 @@ class DMS:
         return f"""{self.deg}\xb0 {self.min}' {self.sec:05.2f}" ({self.dd:.5f}\xb0)"""
 
 angle = DMS(83.81234518)
-assert f"{angle} == {DMS().assign(angle.deg, angle.min, angle.sec):.5f}" == '83° 48\' 44.44" (83.81235°) == 83.81235'
 
+assert f"{angle} == {DMS().assign(angle.deg, angle.min, angle.sec):.5f}" == '83° 48\' 44.44" (83.81235°) == 83.81235'
 assert f"{DMS().assign(-5, 30, 1):.4f}" == '-5.5003'
 assert f"{DMS().assign(5, 30, 1):.4f}" == '5.5003'
         
@@ -98,24 +98,6 @@ class Planar(Triangle):
         self.sine_ratio = sin(self.A_rad) / self.a
         self.B_rad = asin(self.sine_ratio * self.b)
         return self.B_deg
-
-        
-tri = Planar().assign(0, 0, 90, 1, 1, 0) 
-assert f"{abs(sqrt(tri.a**2 + tri.b**2) - tri.law_of_cosine(tri.a, tri.b, tri.C_deg)):.4f}" == '0.0000'
-
-tri = Planar()
-b = tri.law_of_sine_ASA(45, 1, 45)
-C_rad = radians(180 - (45 + 45))
-c = sin(C_rad) / tri.sine_ratio
-assert f"{abs(sqrt(c**2 - b**2) - 1):.4f}" == '0.0000'
-
-
-tri = Planar()
-B_deg = tri.law_of_sine_SSA(1, 1, 45)
-C_rad = radians(180 - (45 + B_deg))
-c = sin(C_rad) / tri.sine_ratio
-assert f"{abs(sqrt(c**2 - 1**2) - 1):.4f}" == '0.0000'
-        
         
 # Spherical
 class Spherical(Triangle):
@@ -158,13 +140,6 @@ class Spherical(Triangle):
         return 2 * pi * (1 - cos(radians(deg)))
 
 
-assert f"{Spherical().law_of_cosine(75, 30, 60):.5f}" == '62.24930'
-
-assert f"{Spherical().law_of_sine_ASA(30, 45, 15):.4f}" == '21.4707'
-
-assert f"{Spherical().law_of_sine_SSA(62.24930, 75, 60):.4f}" == '70.9502'
-
-assert f"{Spherical().area(60, 75, 105, 6378000):.1f}" == '42598827710210.5'
 
 class Geo:
     lat: float
@@ -238,6 +213,32 @@ def position(latitude : float, alt_or_decl : float, azm_or_ha : float, azm_corre
     return decl_deg, hra_deg
 
 
-# if __name__ == "__main__":
-#     import doctest
-#     doctest.testmod(verbose=True)
+if __name__ == "__main__":
+    # Planar tests
+    # Using pythagorean theorem to test the laws of sin and cos
+    tri = Planar().assign(0, 0, 90, 1, 1, 0) 
+    assert f"{abs(sqrt(tri.a**2 + tri.b**2) - tri.law_of_cosine(tri.a, tri.b, tri.C_deg)):.4f}" == '0.0000'
+    
+    tri = Planar()
+    b = tri.law_of_sine_ASA(45, 1, 45)
+    C_rad = radians(180 - (45 + 45))
+    c = sin(C_rad) / tri.sine_ratio
+    assert f"{abs(sqrt(c**2 - b**2) - 1):.4f}" == '0.0000'
+    
+    tri = Planar()
+    B_deg = tri.law_of_sine_SSA(1, 1, 45)
+    C_rad = radians(180 - (45 + B_deg))
+    c = sin(C_rad) / tri.sine_ratio
+    assert f"{abs(sqrt(c**2 - 1**2) - 1):.4f}" == '0.0000'
+    
+    #Spherical tests
+    assert f"{Spherical().law_of_cosine(75, 30, 60):.5f}" == '62.24930'
+
+    assert f"{Spherical().law_of_sine_ASA(30, 45, 15):.4f}" == '21.4707'
+
+    assert f"{Spherical().law_of_sine_SSA(62.24930, 75, 60):.4f}" == '70.9502'
+
+    assert f"{Spherical().area(60, 75, 105, 6378000):.1f}" == '42598827710210.5'
+    
+    import doctest
+    doctest.testmod(verbose=False)

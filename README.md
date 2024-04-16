@@ -2,11 +2,16 @@
 Experiments and tools to extract useful information from raw data
 ## Agenda
 
-#### 4/16
-- Functional programming
-- Review spherical.py testing with assertions
+#### 4/17
+- Finish functional programming
+- Type annotations
 - Deeper into Python (review PfDA ch 2 "Python Language Basics")
 - Choose some exercises to get experience
+
+#### 4/16
+- Review spherical.py testing with assertions
+- Quiz list vs set vs tuple vs dict
+- Start functional programming vs comprehensions
 
 #### 4/15
 - Review randomness and regex

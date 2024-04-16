@@ -33,14 +33,7 @@ class DMS:
         return d * sign
 
     def __str__(self) -> str:
-        return f"""{self.deg}\xb0 {self.min}' {self.sec:05.2f}" ({self.dd:.5f}\xb0)"""
-
-angle = DMS(83.81234518)
-
-assert f"{angle} == {DMS().assign(angle.deg, angle.min, angle.sec):.5f}" == '83° 48\' 44.44" (83.81235°) == 83.81235'
-assert f"{DMS().assign(-5, 30, 1):.4f}" == '-5.5003'
-assert f"{DMS().assign(5, 30, 1):.4f}" == '5.5003'
-        
+        return f"""{self.deg}\xb0 {self.min}' {self.sec:05.2f}" ({self.dd:.5f}\xb0)"""      
 
 class Triangle:
     A_deg : float = 0.0
@@ -169,25 +162,14 @@ class Geo:
         return distance, ang_a, (180 - ang_b) % 360
     
     def trip(self, dest) -> None:
-        """
-        >>> cairo = Geo("Cairo", DMS().assign(30, 2, 40), 'N', DMS().assign(31, 14, 9), 'E');\
-            sfo = Geo("San Francisco", DMS().assign(37, 46, 39), 'N', DMS().assign(122, 24, 59), 'W');\
-            cairo.trip(sfo)
-        From Cairo to San Francisco: 11991.6km (16.65hrs) start: -21° 37' 27.31" (-21.62425°) finish: 203° 48' 12.14" (203.80337°)
-        >>> print(f"path: {DMS(cairo.gc_path)} upper latitude: {DMS(cairo.upper_lat)}")
-        path: 107° 50' 34.76" (107.84299°) upper latitude: 71° 23' 50.49" (71.39736°)
-        """
         km, bearing_start, bearing_end = self.great_circle(dest)
         hrs = (km * 1000 / Geo.M_PER_S) / 3600
-        print("From {} to {}: {:.1f}km ({:.2f}hrs) start: {} finish: {}".format(
+        return "From {} to {}: {:.1f}km ({:.2f}hrs) start: {} finish: {}".format(
             self.name, dest.name, km, hrs, DMS(bearing_start), DMS(bearing_end)
-        ))
+        )
 
 def position(latitude : float, alt_or_decl : float, azm_or_ha : float, azm_correction : bool = False) -> tuple[float, float]:
     """ Convert alt/az to decl/ha
-    >>> latitude = 52;h = DMS().assign(19,47,48);A = DMS().assign(282,42,5);lst = 0;decl, hra = position(latitude, h, A);\
-        ra = DMS((hra - lst)/15);print(f"RA: {ra.deg:.0f}:{ra.min:2.0f}:{ra.sec:02.2f} ({hra:.5f}\xb0) decl: {DMS(decl)}")
-    RA: 5:48:39.00 (87.16249°) decl: 23° 13' 09.45" (23.21929°)
     """
     lat_rad = radians(latitude)
     lat_sin = sin(lat_rad)
@@ -214,6 +196,13 @@ def position(latitude : float, alt_or_decl : float, azm_or_ha : float, azm_corre
 
 
 if __name__ == "__main__":
+    
+    #Utility tests
+    angle = DMS(83.81234518)
+    assert f"{angle} == {DMS().assign(angle.deg, angle.min, angle.sec):.5f}" == '83° 48\' 44.44" (83.81235°) == 83.81235'
+    assert f"{DMS().assign(-5, 30, 1):.4f}" == '-5.5003'
+    assert f"{DMS().assign(5, 30, 1):.4f}" == '5.5003'
+    
     # Planar tests
     # Using pythagorean theorem to test the laws of sin and cos
     tri = Planar().assign(0, 0, 90, 1, 1, 0) 
@@ -233,12 +222,22 @@ if __name__ == "__main__":
     
     #Spherical tests
     assert f"{Spherical().law_of_cosine(75, 30, 60):.5f}" == '62.24930'
-
     assert f"{Spherical().law_of_sine_ASA(30, 45, 15):.4f}" == '21.4707'
-
     assert f"{Spherical().law_of_sine_SSA(62.24930, 75, 60):.4f}" == '70.9502'
-
     assert f"{Spherical().area(60, 75, 105, 6378000):.1f}" == '42598827710210.5'
     
-    import doctest
-    doctest.testmod(verbose=False)
+    cairo = Geo("Cairo", DMS().assign(30, 2, 40), 'N', DMS().assign(31, 14, 9), 'E')
+    sfo = Geo("San Francisco", DMS().assign(37, 46, 39), 'N', DMS().assign(122, 24, 59), 'W')
+    
+    assert cairo.trip(sfo) == """From Cairo to San Francisco: 11991.6km (16.65hrs) start: -21° 37' 27.31" (-21.62425°) finish: 203° 48' 12.14" (203.80337°)"""
+    assert sfo.trip(cairo) == """From San Francisco to Cairo: 11991.6km (16.65hrs) start: 23° 48' 12.14" (23.80337°) finish: 158° 22' 32.69" (158.37575°)"""
+    assert f"path: {DMS(cairo.gc_path)} upper latitude: {DMS(cairo.upper_lat)}" == """path: 107° 50' 34.76" (107.84299°) upper latitude: 71° 23' 50.49" (71.39736°)"""
+    
+    latitude = 52
+    h = DMS().assign(19,47,48)
+    A = DMS().assign(282,42,5)
+    lst = 0
+    decl, hra = position(latitude, h, A)
+    ra = DMS((hra - lst)/15)
+    
+    assert f"""RA: {ra.deg:.0f}:{ra.min:2.0f}:{ra.sec:02.2f} ({hra:.5f}\xb0) decl: {DMS(decl)}""" == """RA: 5:48:39.00 (87.16249°) decl: 23° 13' 09.45" (23.21929°)"""

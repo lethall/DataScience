@@ -2,11 +2,13 @@
 Experiments and tools to extract useful information from raw data
 ## Agenda
 
-#### 4/17
-- Finish functional programming
+#### 4/18
 - Type annotations
 - Deeper into Python (review PfDA ch 2 "Python Language Basics")
 - Choose some exercises to get experience
+
+#### 4/17
+- Finish functional programming
 
 #### 4/16
 - Review spherical.py testing with assertions

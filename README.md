@@ -2,8 +2,12 @@
 Experiments and tools to extract useful information from raw data
 ## Agenda
 
-#### 4/19
+#### 4/22
+- Bar charts
 - Choose some exercises to get experience
+- Start linear algebra
+
+#### 4/19
 - Start visualizing
 
 #### 4/18

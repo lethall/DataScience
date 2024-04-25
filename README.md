@@ -2,10 +2,20 @@
 Experiments and tools to extract useful information from raw data
 ## Agenda
 
-#### 4/22
-- Bar charts
-- Choose some exercises to get experience
+#### 4/26
 - Start linear algebra
+
+#### 4/25
+- Bar charts
+
+#### 4/24
+- sick
+
+#### 4/23
+- sick
+
+#### 4/22
+- sick
 
 #### 4/19
 - Start visualizing

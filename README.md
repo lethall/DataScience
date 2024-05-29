@@ -12,6 +12,25 @@ Experiments and tools to extract useful information from raw data
 - Discussed worldviews/scientific lying
 - Probability
 
+#### 5/9
+- Review [Map of Mathematics](https://youtu.be/OmJ-4B-mS-Y?si=D61lc5TB1tffDVhE)
+- Correlation
+
+#### 5/8
+- Discuss brilliant.org
+- Finished dispersion
+
+#### 5/7
+- Central tendencies
+- Dispersion
+
+#### 5/6
+- sick
+
+#### 5/3
+- finished linear algebra
+- Start Statistics
+
 #### 4/26
 - Start linear algebra
 

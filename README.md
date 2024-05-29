@@ -2,6 +2,16 @@
 Experiments and tools to extract useful information from raw data
 ## Agenda
 
+#### 5/29
+- ...
+
+#### 5/28
+- Bayes theorem
+
+#### 5/27
+- Discussed worldviews/scientific lying
+- Probability
+
 #### 4/26
 - Start linear algebra
 

@@ -1,6 +1,10 @@
 from collections import Counter
 from typing import List
-from vectors import sum_of_squares, dot
+try:
+    from .vectors import sum_of_squares, dot
+except:
+    from vectors import sum_of_squares, dot
+
 import math
 from random import random
 

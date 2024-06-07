@@ -1,25 +1,28 @@
 import enum, random
+from DSFS.probability import inverse_normal_cdf
 
-class Kid(enum.Enum):
-    BOY = 0
-    GIRL = 1
+# class Kid(enum.Enum):
+#     BOY = 0
+#     GIRL = 1
     
-def random_kid() -> Kid:
-    return random.choice([Kid.BOY, Kid.GIRL])
+# def random_kid() -> Kid:
+#     return random.choice([Kid.BOY, Kid.GIRL])
 
-both_girls = 0
-older_girl = 0
-either_girl = 0
+# both_girls = 0
+# older_girl = 0
+# either_girl = 0
 
-for _ in range(10000):
-    younger = random_kid()
-    older = random_kid()
-    if older == Kid.GIRL:
-        older_girl += 1    
-    if older == Kid.GIRL and younger == Kid.GIRL:
-        both_girls += 1
-    if older == Kid.GIRL or younger == Kid.GIRL:
-        either_girl += 1
+# for _ in range(10000):
+#     younger = random_kid()
+#     older = random_kid()
+#     if older == Kid.GIRL:
+#         older_girl += 1    
+#     if older == Kid.GIRL and younger == Kid.GIRL:
+#         both_girls += 1
+#     if older == Kid.GIRL or younger == Kid.GIRL:
+#         either_girl += 1
 
-print("P(both | older): ", both_girls / older_girl)
-print("P(both | either): ", both_girls / either_girl)
+# print("P(both | older): ", both_girls / older_girl)
+# print("P(both | either): ", both_girls / either_girl)
+
+print(inverse_normal_cdf(0.44, 14, 8))

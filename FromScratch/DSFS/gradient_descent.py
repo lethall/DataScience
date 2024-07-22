@@ -20,6 +20,7 @@ def partial_difference_quotient(f: Callable[[Vector], float], v: Vector, i: int,
     """Returns the i-th partial difference quotient of f at v"""
     
     w = [v_j + (h if j == i else 0) for j, v_j in enumerate(v)]
+    print(w)
     
     return (f(w) - f(v)) / h
 

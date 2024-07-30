@@ -52,4 +52,16 @@ def minibatch(dataset: List[T], batch_size: int, shuffle: bool = True) -> Iterat
     for start in batch_starts:
         end = start + batch_size
         yield dataset[start:end]
+        
+
+def is_between(value: float, target: float, epsilon = 0) -> bool:
+    """True if value is within epsilon of target, inclusive"""
+       
+    setLow = target - epsilon
+    setHigh = target + epsilon
+        
+    if setLow <= value <= setHigh:
+        return True
+    else:
+        return False
     

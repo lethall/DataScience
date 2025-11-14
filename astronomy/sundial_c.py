@@ -2,13 +2,7 @@ from skyfield.api import load, N, W, wgs84, utc, Angle
 from skyfield import almanac
 from datetime import datetime
 from pytz import timezone
-from sys import argv, exit
-import os
 
-print(f"prog: '{argv[0]}' cwd: {os.curdir}")
-
-"""
-"""
 est = timezone("US/Eastern")
 ts = load.timescale()
 de421 = load("de421.bsp")
@@ -23,17 +17,20 @@ def print_observe(from_obj, obj, tt):
     ra, dec, d = pos.radec()
     print(f"{obj.target_name.split()[-1]}\nalt: {alt.degrees:.2f}\t az: {az.degrees:.1f}\n ra: {ra.hours:.3f}h\tdec: {dec.degrees:.1f}")
 
-a = ts.from_datetime(datetime.strptime("2025-11-03 00:00 UTC", "%Y-%m-%d %H:%M %Z").replace(tzinfo=utc))
-b = ts.from_datetime(datetime.strptime("2025-11-16 00:00 UTC", "%Y-%m-%d %H:%M %Z").replace(tzinfo=utc))
+a = ts.from_datetime(datetime.strptime("2025-11-14 00:00 UTC", "%Y-%m-%d %H:%M %Z").replace(tzinfo=utc))
+b = ts.from_datetime(datetime.strptime("2025-11-28 00:00 UTC", "%Y-%m-%d %H:%M %Z").replace(tzinfo=utc))
 t, y = almanac.find_discrete(a, b, almanac.moon_phases(de421))
 
 for tm, ty, ph in zip(t.astimezone(est),y,[almanac.MOON_PHASES[yi] for yi in y]):
     print(f"{tm.isoformat(' ', 'seconds')} {ph}")
 # almanac.moon_phases([a,b])
+print("Rise/Set/Daylight")
 rt, y = almanac.find_risings(caledonia, sun, a, b)
 st, y = almanac.find_settings(caledonia, sun, a, b)
 for rtm, stm in zip(rt,st):
-    print(f"{rtm.astimezone(est).date()} {rtm.astimezone(est).time().isoformat('seconds')} / {stm.astimezone(est).time().isoformat('seconds')}")
+    dayhrs = (stm-rtm)*24
+    daylight = f"{int(dayhrs)}:{int((dayhrs-int(dayhrs))*60):02d}"
+    print(f"{rtm.astimezone(est).date()} {rtm.astimezone(est).time().isoformat('seconds')}/{stm.astimezone(est).time().isoformat('seconds')}/{daylight}")
 
 t = ts.now()
 #t = ts.from_datetime(datetime.strptime("2025-08-23 06:06 UTC", "%Y-%m-%d %H:%M %Z").replace(tzinfo=utc))

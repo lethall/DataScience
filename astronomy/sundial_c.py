@@ -27,7 +27,7 @@ b = ts.from_datetime(t + timedelta(7))
 t, y = almanac.find_discrete(a, b, almanac.moon_phases(de421))
 
 for tm, ty, ph in zip(t.astimezone(est),y,[almanac.MOON_PHASES[yi] for yi in y]):
-    print(f"{tm.isoformat(' ', 'seconds')} {ph}")
+    print(f"{tm.isoformat(' ', 'minutes')} {ph}")
 # almanac.moon_phases([a,b])
 print("Rise/Set/Daylight")
 rt, y = almanac.find_risings(caledonia, sun, a, b)

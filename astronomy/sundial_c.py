@@ -38,6 +38,8 @@ for rtm, stm in zip(rt,st):
         print("---")
     offset += 1
     dayhrs = (stm-rtm)*24
+    if dayhrs < 0:
+        dayhrs += 24
     daylight = f"{int(dayhrs)}:{int((dayhrs-int(dayhrs))*60):02d}"
     print(f"{rtm.astimezone(est).date()} {rtm.astimezone(est).time().isoformat('seconds')}/{stm.astimezone(est).time().isoformat('seconds')}/{daylight}")
 

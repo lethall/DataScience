@@ -27,9 +27,9 @@ b = ts.from_datetime(t + timedelta(7))
 t, y = almanac.find_discrete(a, b, almanac.moon_phases(de421))
 
 for tm, ty, ph in zip(t.astimezone(est),y,[almanac.MOON_PHASES[yi] for yi in y]):
-    print(f"{tm.isoformat(' ', 'minutes')} {ph}")
+    print(f"{tm.isoformat(' ', 'minutes')} {ph}\n")
 # almanac.moon_phases([a,b])
-print("Rise/Set/Daylight")
+print("Rise/Set/Daylight\n")
 rt, y = almanac.find_risings(caledonia, sun, a, b)
 st, y = almanac.find_settings(caledonia, sun, a, b)
 offset = 0
@@ -41,7 +41,7 @@ for rtm, stm in zip(rt,st):
     if dayhrs < 0:
         dayhrs += 24
     daylight = f"{int(dayhrs)}:{int((dayhrs-int(dayhrs))*60):02d}"
-    print(f"{rtm.astimezone(est).date()} {rtm.astimezone(est).time().isoformat('seconds')}/{stm.astimezone(est).time().isoformat('seconds')}/{daylight}")
+    print(f"{rtm.astimezone(est).date()} {rtm.astimezone(est).time().isoformat('seconds')}/{stm.astimezone(est).time().isoformat('seconds')}/{daylight}\n")
 
 t = ts.now()
 #t = ts.from_datetime(datetime.strptime("2025-08-23 06:06 UTC", "%Y-%m-%d %H:%M %Z").replace(tzinfo=utc))

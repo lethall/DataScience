@@ -163,3 +163,4 @@ cython_debug/
 astronomy/*.bsp
 astronomy/*.dat
 .DS_Store
+/astronomy/ref/z.py

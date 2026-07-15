@@ -33,10 +33,23 @@ for ii in a:
   else:
     av.append(ii)
 
+ayr = []
+cyr = 70
+
 @get('/id/<ii>')
 def id(ii):
   response.set_header("Content-Type", "image/jpeg")
   return get_id(ii)
+
+@get('/yr')
+@get('/yr/<yy>')
+def year(yy=70):
+  global ayr, cyr
+  response.set_header("Content-Type", "image/jpeg")
+  if yy != cyr or len(ayr) == 0:
+    ayr = yr(int(yy))
+    cyr = yy
+  return get_id(ayr.pop(0))
 
 @get("/fv")
 def fv():

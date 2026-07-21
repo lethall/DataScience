@@ -1,4 +1,5 @@
 import sqlite3
+from sys import argv
 from random import choice
 from bottle import get, run, response
 from PIL import Image
@@ -19,7 +20,7 @@ def cc(ar):
   return ii
 
 fav = [9712,9511,8903,8406,8207,8112,7102,7009,7001,6906,6703,8310,7406]
-dn = 
+dn = argv[1]
 db = sqlite3.connect(dn)
 a = [ii[0] for ii in db.execute("select id from im").fetchall()]
 db.close()
@@ -141,4 +142,4 @@ window.addEventListener('resize', refreshOnInterval);
         </script>
     </body></html>"""
 
-run(host='0.0.0.0', port=8080, debug=True)
+run(port=8080, debug=True)
